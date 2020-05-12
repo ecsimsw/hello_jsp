@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +31,13 @@ public class ServletEX extends HttpServlet {
 		String pw = request.getParameter("pw");
 		
 		System.out.println("id : " + id + "  pw : "+pw);
+		
+		ServletContext context = this.getServletContext();
+		System.out.println("default DIR : "+ context.getInitParameter("defaultDIR"));
+	
+ServletConfig config = this.getServletConfig();
+System.out.println("id : " + config.getInitParameter("d") + "  pw : "+pw);
+		
 	}
 
 

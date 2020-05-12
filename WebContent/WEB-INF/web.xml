@@ -10,16 +10,46 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
 
+  
+  <context-param>
+   <description>made by ECSIMSW</description>
+   <param-name>defaultDIR</param-name>
+   <param-value>/download</param-value> 
+  </context-param>
+
   <!-- servlet registering -->
   <servlet>
     <servlet-name>myServlet</servlet-name>
     <servlet-class>com.ecsimsw.ServletEX</servlet-class>
+          <init-param>
+          <param-name>defaultId</param-name>
+          <param-value>jinhwan</param-value>
+      </init-param>
+      <init-param>
+          <param-name>defaultPw</param-name>
+          <param-value>1234</param-value>
+      </init-param>
+  </servlet> 
+
+
+    <!-- servlet registering -->
+  <servlet>
+    <servlet-name>myJSP</servlet-name>
+    <jsp-file>/testJSP.jsp</jsp-file>
+      <init-param>
+          <param-name>defaultId</param-name>
+          <param-value>jinhwan</param-value>
+      </init-param>
+      <init-param>
+          <param-name>defaultPw</param-name>
+          <param-value>1234</param-value>
+      </init-param>
   </servlet> 
   
    <!-- servlet mapping -->
   <servlet-mapping>
-  <servlet-name>myServlet</servlet-name>
-  <url-pattern>/hello</url-pattern>
+  <servlet-name>myJSP</servlet-name>
+  <url-pattern>/testJSP.jsp</url-pattern>
   </servlet-mapping>
   
 </web-app>
