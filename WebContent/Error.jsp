@@ -9,5 +9,6 @@
 </head>
 <body>
    <h4>ERROR</h4>
+   <%= exception.getMessage() %>
 </body>
 </html>

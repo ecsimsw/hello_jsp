@@ -21,14 +21,6 @@
   <servlet>
     <servlet-name>myServlet</servlet-name>
     <servlet-class>com.ecsimsw.ServletEX</servlet-class>
-          <init-param>
-          <param-name>defaultId</param-name>
-          <param-value>jinhwan</param-value>
-      </init-param>
-      <init-param>
-          <param-name>defaultPw</param-name>
-          <param-value>1234</param-value>
-      </init-param>
   </servlet> 
 
 
