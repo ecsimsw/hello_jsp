@@ -10,20 +10,7 @@
 </head>
 <body>
 	<%
-	Cookie[] cookies = request.getCookies();
-	Cookie loginInfo = null;
-	
-	if(cookies != null){
-		for(Cookie c : cookies){
-			if(c.getName().equals("loginInfo")){
-				loginInfo = c;
-			}
-		}
-	}
-	%>
-	
-	<%
-		if(loginInfo == null){
+	if(session.getAttribute("loginID") == null){
 	%>
 	<p>먼저 로그인을 하세요</p>
 	<form action= "login" method ="post">
@@ -39,11 +26,13 @@
 			<input type="submit" value="제출">
 		</p>
 	</form>
-	
 	<%
 		}else{
 	%>
-	<p> 당신의 로그인 id <%= loginInfo.getValue()%> </p>
+	<p> 당신의 로그인 id <%= session.getAttribute("loginID") %> </p>
+	<form action="logout" method="post">
+		<input type="submit" value="log-out">
+	</form>
 	<%
 	}
 	%>
