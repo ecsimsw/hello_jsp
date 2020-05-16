@@ -14,40 +14,64 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.*;
 
 @WebServlet("/login")
 public class ServletEX extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
+		//String id = request.getParameter("id");
+		//String pw = request.getParameter("pw");
 
-		Cookie[] cookies = request.getCookies();
-		Cookie loginCookie = null;
+		PrintWriter out = response.getWriter();
 		
-		if(cookies != null) {
-			for(Cookie c : cookies) {
-				System.out.println(c.getName()+ " "+c.getValue());
-				
-				if(c.getName().equals("loginInfo")) {
-					loginCookie = c; 
-				}
-			}
-		}
-		if(loginCookie == null) {
-			System.out.println("new login");
-	        loginCookie = new Cookie("loginInfo",id);
-		}
+		//out.print(id);
 		
-		response.addCookie(loginCookie);
-		loginCookie.setMaxAge(60*60);
-		
-		HttpSession sesson = request.getSession();
-		
-		sesson.setAttribute("loginID", id);
-		
-		response.sendRedirect("testJSP.jsp");
+        Connection conn = null;
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String url ="jdbc:mysql://localhost:3306/hellojdbc?serverTimezone=UTC";
+            conn = DriverManager.getConnection(url, "root", "root");
+            System.out.println("연결 성공");
+
+            Statement stat=conn.createStatement();
+            
+            String sql = "insert into logininfo(id,pw) values"
+                    + "('admin1','admin')";
+
+            int result = stat.executeUpdate(sql); 
+            System.out.println(result);
+            
+            sql = "select * FROM logininfo";
+            ResultSet rs = null;
+            rs=stat.executeQuery(sql);
+            
+            while(rs.next()) {
+                String id =rs.getString("id");
+                String pw =rs.getString("pw");
+                System.out.println(id+" "+pw);
+            }
+            rs.close();
+            
+        }
+        catch(ClassNotFoundException e){
+            System.out.println(e+"드라이버 로딩 실패");
+        }
+        catch(SQLException e){
+            System.out.println("에러: " + e);
+        }
+        finally{
+            try{
+                if( conn != null && !conn.isClosed()){
+                    conn.close();
+                }
+            }
+            catch( SQLException e){
+                e.printStackTrace();
+            }
+        }
 		
 	}
 
