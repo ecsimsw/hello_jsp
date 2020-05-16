@@ -30,6 +30,7 @@ public class ServletEX extends HttpServlet {
 		
         Connection conn = null;
 
+        
         try{
             Class.forName("com.mysql.jdbc.Driver");
             String url ="jdbc:mysql://localhost:3306/hellojdbc?serverTimezone=UTC";
@@ -44,6 +45,12 @@ public class ServletEX extends HttpServlet {
             int result = stat.executeUpdate(sql); 
             System.out.println(result);
             
+            sql = "insert into logininfo (id, pw) values (?,?)";
+            PreparedStatement pstat = conn.prepareStatement(sql);
+            pstat.setString(1,"admin3");
+            pstat.setString(2,"admin4");
+            pstat.executeUpdate();
+            
             sql = "select * FROM logininfo";
             ResultSet rs = null;
             rs=stat.executeQuery(sql);
@@ -55,6 +62,18 @@ public class ServletEX extends HttpServlet {
             }
             rs.close();
             
+            sql = "select * FROM logininfo WHERE id= (?)";
+            pstat = conn.prepareStatement(sql);
+            pstat.setString(1, "admin");
+            rs =pstat.executeQuery();
+            
+            while(rs.next()) {
+                String id =rs.getString("id");
+                String pw =rs.getString("pw");
+                System.out.println(id+" "+pw);
+            }
+            rs.close();
+           
         }
         catch(ClassNotFoundException e){
             System.out.println(e+"드라이버 로딩 실패");
