@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.ecsimsw.dao.AccountDAO;
+import com.ecsimsw.dto.AccountDTO;
+
+import java.util.*;
 import java.sql.*;
 
 @WebServlet("/login")
@@ -21,13 +26,8 @@ public class ServletEX extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String id = request.getParameter("id");
-		//String pw = request.getParameter("pw");
-
-		PrintWriter out = response.getWriter();
-		
-		//out.print(id);
-		
+	
+		/*
         Connection conn = null;
 
         
@@ -91,7 +91,21 @@ public class ServletEX extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        */
 		
+		AccountDAO accountDAO = new AccountDAO();
+		
+		AccountDTO newData = new AccountDTO(0, "hiDTO", "hello");
+		accountDAO.insertAccount(newData);
+		
+		
+		accountDAO = new AccountDAO();
+		
+		ArrayList<AccountDTO> sellected = accountDAO.selectAccount();
+		for(AccountDTO tempDTO : sellected) {
+			System.out.println(tempDTO.getId() + tempDTO.getPw());
+		}
+
 	}
 
 
